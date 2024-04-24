@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34707.107
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "phi-3", "ConsoleApp8\phi-3.csproj", "{C0BE986D-2E9B-4FEC-8972-1C4D9ECF07CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "phi-3", "phi-3\phi-3.csproj", "{C0BE986D-2E9B-4FEC-8972-1C4D9ECF07CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
