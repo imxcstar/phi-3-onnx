@@ -1,0 +1,3 @@
+[submodule "libs/Gradio.Net"]
+	path = libs/Gradio.Net
+	url = https://github.com/feiyun0112/Gradio.Net.git
