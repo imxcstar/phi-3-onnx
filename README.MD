@@ -2,7 +2,9 @@
 
 ### 1.克隆此项目(Clone Project)
 
+``` shell
 git clone --recursive https://github.com/imxcstar/phi-3-onnx
+```
 
 ### 2.模型下载(Model Download)
 
