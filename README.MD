@@ -1,4 +1,4 @@
-## 使用(Use)
+## 编译(Build)
 
 ### 1.克隆此项目(Clone Project)
 
