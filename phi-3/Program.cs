@@ -4,7 +4,6 @@ namespace phi3
 {
     public class Program
     {
-        //https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-onnx/tree/main/cpu_and_mobile/cpu-int4-rtn-block-32-acc-level-4
         static AIChat aiChat = new AIChat("./phi3-mini-4k-cpu");
 
         static async Task Main(string[] args)
