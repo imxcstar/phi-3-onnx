@@ -5,7 +5,7 @@ namespace phi3
 {
     public class Program
     {
-        static AIChat aiChat = new AIChat("C:\\Users\\14546\\Documents\\Data\\AI\\phi3-mini-4k-cpu");
+        static AIChat aiChat = new AIChat("./phi3-mini-4k-cpu");
 
         static async Task Main(string[] args)
         {
