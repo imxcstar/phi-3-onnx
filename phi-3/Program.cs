@@ -1,10 +1,11 @@
 ﻿using Gradio.Net;
+using System;
 
 namespace phi3
 {
     public class Program
     {
-        static AIChat aiChat = new AIChat("./phi3-mini-4k-cpu");
+        static AIChat aiChat = new AIChat("C:\\Users\\14546\\Documents\\Data\\AI\\phi3-mini-4k-cpu");
 
         static async Task Main(string[] args)
         {
@@ -18,7 +19,7 @@ namespace phi3
                 gr.Markdown("phi-3-mini-4k-cpu");
 
                 var chatbot = gr.Chatbot();
-                var msg = gr.Textbox();
+                var msg = gr.MultimodalTextbox(label: "message", fileTypes: ["image"]);
 
                 Button subBtn, clearBtn;
 
@@ -28,20 +29,28 @@ namespace phi3
                     clearBtn = gr.Button("Clear");
                 }
 
-                await subBtn.Click(fn: async input => await Respond(Textbox.Payload(input.Data[0]), Chatbot.Payload(input.Data[1])),
+                await subBtn.Click(streamingFn: input => Respond(MultimodalTextbox.Payload(input.Data[0]), Chatbot.Payload(input.Data[1])),
                     inputs: [msg, chatbot], outputs: [msg, chatbot]);
 
-                await clearBtn.Click(fn: async input => gr.Output("", null),
+                await clearBtn.Click(fn: async input => gr.Output(null, null),
                     inputs: [msg, chatbot], outputs: [msg, chatbot]);
 
                 return blocks;
             }
         }
 
-        static async Task<Output> Respond(string message, IList<ChatbotMessagePair> chatHistory)
+        static async IAsyncEnumerable<Output> Respond(MultimodalData message, IList<ChatbotMessagePair> chatHistory)
         {
-            chatHistory.Add(new ChatbotMessagePair(message, await aiChat.ChatAsync(message, chatHistory)));
-            return gr.Output("", chatHistory);
+            var file = message.Files.FirstOrDefault();
+            if (file != null && file.MimeType != "image/png")
+                file = null;
+            chatHistory.Add(new ChatbotMessagePair(message.Text, ""));
+            var chat = aiChat.ChatAsync(message.Text, chatHistory.Select(x => new ChatMessage() { UserMessage = x.HumanMessage.TextMessage, AIMessage = x.AiMessage.TextMessage }).ToList());
+            await foreach (var retMsg in chat)
+            {
+                chatHistory.Last().AiMessage.TextMessage += retMsg;
+                yield return gr.Output(null, chatHistory);
+            }
         }
     }
 }
